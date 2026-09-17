@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pharmacy POS & Inventory — Feature Roadmap</title>
+<style>
+  :root {
+    --bg:#f5f7fa; --card:#fff; --text:#172033; --muted:#657084;
+    --border:#dfe4ec; --primary:#2563eb; --primary-soft:#eff6ff;
+    --critical:#dc2626; --high:#ea580c; --medium:#ca8a04; --low:#16a34a; --future:#7c3aed;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  .container{max-width:1400px;margin:auto;padding:28px}
+  .hero{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:20px}
+  h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;color:var(--muted);line-height:1.6}
+  .toolbar{position:sticky;top:0;z-index:10;background:rgba(245,247,250,.96);backdrop-filter:blur(8px);padding:12px 0}
+  .toolbar-inner{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  button,.filter{border:1px solid var(--border);background:#fff;border-radius:8px;padding:9px 12px;cursor:pointer;color:var(--text)}
+  button:hover{background:#f8fafc}.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .stats{margin-left:auto;color:var(--muted);font-size:14px}
+  .phase{margin:24px 0}.phase-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .phase-head h2{margin:0;font-size:21px}.priority{font-size:12px;font-weight:700;border-radius:999px;padding:4px 9px}
+  .p0{background:#fee2e2;color:var(--critical)} .p1{background:#ffedd5;color:var(--high)}
+  .p2{background:#fef3c7;color:var(--medium)} .p3{background:#dcfce7;color:var(--low)}
+  .p4{background:#ede9fe;color:var(--future)}
+  .module{background:var(--card);border:1px solid var(--border);border-radius:12px;margin:10px 0;overflow:hidden}
+  .module summary{list-style:none;cursor:pointer;padding:15px 17px;display:flex;align-items:flex-start;gap:12px}
+  .module summary::-webkit-details-marker{display:none}
+  .module summary:hover{background:#fafbfc}
+  .check{width:20px;height:20px;flex:0 0 auto;margin-top:1px;accent-color:var(--primary)}
+  .module-title{font-weight:700}.module-short{font-size:13px;color:var(--muted);margin-top:3px}
+  .module-body{border-top:1px solid var(--border);padding:17px 20px 19px 50px}
+  .module-body p{color:#465166;line-height:1.6;margin:0 0 13px}
+  .module-body ul{margin:7px 0 14px;padding-left:20px;color:#465166;line-height:1.65}
+  .module-body h4{margin:16px 0 6px;font-size:14px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap}.tag{font-size:12px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:4px 7px;color:#475569}
+  .checklist-count{font-size:13px;color:var(--muted)}
+  @media(max-width:700px){.container{padding:14px}.stats{width:100%;margin-left:0}.module-body{padding-left:20px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <section class="hero">
+    <h1>Pharmacy POS & Inventory — Feature Roadmap</h1>
+    <p>Production-oriented checklist from critical pharmacy operations to advanced automation. Select modules/features to mark them as planned, completed, or included in the implementation scope.</p>
+  </section>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <button class="primary" onclick="selectAll(true)">Select All</button>
+      <button onclick="selectAll(false)">Clear All</button>
+      <button onclick="toggleDetails()">Expand / Collapse</button>
+      <button onclick="window.print()">Print</button>
+      <span class="stats" id="stats">0 selected</span>
+    </div>
+  </div>
+
+  <main id="roadmap">
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p0">P0 — CRITICAL</span><h2>Core POS & Pharmacy Operations</h2></div>
+
+      <details class="module" open>
+        <summary><input class="check" type="checkbox"><div><div class="module-title">1. User & Access Management</div><div class="module-short">Secure accounts, roles, permissions, and access control.</div></div></summary>
+        <div class="module-body">
+          <p>Controls who can access the system and what each employee is allowed to see or perform. Sensitive actions such as voids, refunds, price changes, prescription dispensing, and inventory adjustments should require appropriate permissions.</p>
+          <h4>Features</h4><ul><li>User accounts, login/logout, password management, activation/deactivation, session control.</li><li>Roles such as Administrator, Pharmacist, Pharmacy Assistant, Cashier, Inventory Staff, Purchasing Staff, Manager, and Auditor.</li><li>Granular permissions per module and action: view, add, edit, approve, void, refund, adjust, export, and manage.</li><li>Login history, failed-login tracking, session monitoring, and security controls.</li></ul>
+          <div class="tags"><span class="tag">RBAC</span><span class="tag">Security</span><span class="tag">Audit</span></div>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">2. Product & Medicine Master</div><div class="module-short">Central catalog for medicines, OTC products, devices, and other merchandise.</div></div></summary>
+        <div class="module-body">
+          <p>Provides the authoritative product definition used by POS, inventory, purchasing, pricing, reporting, and prescription workflows.</p>
+          <h4>Features</h4><ul><li>SKU, barcode, generic name, brand name, description, dosage form, strength, unit, manufacturer, supplier, category, subcategory, and status.</li><li>Medicine classifications such as OTC, prescription, antibiotic, maintenance, generic, branded, supplement, medical device, and non-medicine.</li><li>Configurable product status, reorder settings, tax settings, and product notes.</li><li>Duplicate detection and controlled editing of master data.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">3. Barcode Management</div><div class="module-short">Fast and reliable barcode identification throughout the pharmacy.</div></div></summary>
+        <div class="module-body">
+          <p>Associates manufacturer and internal barcodes with products so staff can scan products at POS, receiving, stock counting, and transfers.</p>
+          <h4>Features</h4><ul><li>Multiple barcodes per product, internal barcodes, manufacturer barcodes, barcode validation, and duplicate detection.</li><li>Barcode lookup optimized for keyboard scanners and USB/Bluetooth scanners.</li><li>Fallback product search by SKU, generic name, or brand name.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">4. Pharmacy POS / Sales</div><div class="module-short">Primary point-of-sale workflow for retail and pharmacy transactions.</div></div></summary>
+        <div class="module-body">
+          <p>Provides the cashier-facing sales interface for scanning products, building a cart, applying authorized discounts, selecting customers, processing payments, and completing transactions.</p>
+          <h4>Features</h4><ul><li>Barcode scanning, product search, quantity controls, cart management, held/recall transactions, customer selection, discounts, and payment processing.</li><li>Automatic stock availability checking and batch/FEFO allocation where applicable.</li><li>Prescription-required product warnings and pharmacist verification workflow.</li><li>Transaction confirmation, receipt generation, and controlled reprinting.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">5. Payment Management</div><div class="module-short">Record and reconcile all payment methods used at the register.</div></div></summary>
+        <div class="module-body">
+          <p>Supports cash and electronic payments while preserving payment references and reconciliation data.</p>
+          <h4>Features</h4><ul><li>Cash, GCash, Maya, debit, credit card, bank transfer, QR, and configurable payment types.</li><li>Reference number capture for non-cash payments.</li><li>Split/multiple payment support can be enabled if required.</li><li>Payment method reporting and cashier reconciliation.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">6. Receipt & Printing</div><div class="module-short">Generate compliant-looking transaction receipts and support thermal printers.</div></div></summary>
+        <div class="module-body">
+          <p>Produces customer receipts and internal copies from finalized transactions, with support for common thermal receipt formats.</p>
+          <h4>Features</h4><ul><li>58mm and 80mm receipt layouts.</li><li>Pharmacy identity, transaction number, date/time, products, quantities, discounts, tax, total, payment, change, and cashier.</li><li>Receipt preview, controlled reprint, and printer configuration.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">7. Sales Transactions</div><div class="module-short">Permanent transaction records linking sales, products, batches, customers, and payments.</div></div></summary>
+        <div class="module-body">
+          <p>Stores finalized sales as structured records rather than editable/deletable documents. Each sale should retain its items, quantities, prices, discounts, batch allocation, cashier, payment, and timestamps.</p>
+          <h4>Features</h4><ul><li>Transaction header and line-item records.</li><li>Batch-level item allocation for traceability.</li><li>Search, filtering, viewing, printing, and export.</li><li>Immutable transaction history with reversal/void mechanisms instead of deletion.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">8. Void / Cancellation</div><div class="module-short">Controlled reversal of incorrect or invalid transactions.</div></div></summary>
+        <div class="module-body">
+          <p>Prevents users from silently deleting completed sales. A void should require a reason and, for sensitive cases, authorization by a supervisor or manager.</p>
+          <h4>Features</h4><ul><li>Void reason, authorization, reversal of inventory, reversal of payment where applicable, and complete audit trail.</li><li>Configurable time limits and approval requirements.</li><li>Void reporting by cashier, user, date, and reason.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">9. Sales Returns & Refunds</div><div class="module-short">Manage customer returns without corrupting sales or inventory history.</div></div></summary>
+        <div class="module-body">
+          <p>Links returned items to the original sale where possible and records the reason, quantity, refund, and inventory disposition.</p>
+          <h4>Features</h4><ul><li>Original transaction lookup, partial item returns, return quantities, reason, refund method, and authorization.</li><li>Disposition options: restock, damaged, quarantine, expired, or supplier return.</li><li>Automatic inventory and financial reversal records.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">10. Cash Register & Shift</div><div class="module-short">Opening, operating, and closing controls for each POS register.</div></div></summary>
+        <div class="module-body">
+          <p>Creates a clear financial boundary around each cashier shift so expected cash can be compared with actual cash at closing.</p>
+          <h4>Features</h4><ul><li>Opening cash, register assignment, cashier assignment, shift start/end.</li><li>Cash sales, refunds, cash-in, cash-out, expenses, and other register movements.</li><li>Expected cash versus actual cash, variance, and closing report.</li><li>Supervisor approval for closing or significant variances.</li></ul>
+        </div>
+      </details>
+
+      <details class="module">
+        <summary><input class="check" type="checkbox"><div><div class="module-title">11. Audit Trail</div><div class="module-short">Tamper-resistant history of important system and business actions.</div></div></summary>
+        <div class="module-body">
+          <p>Records who changed important information, what changed, when it changed, and why. This is essential for accountability in pharmacy, POS, and inventory operations.</p>
+          <h4>Features</h4><ul><li>User, action, module, record ID, timestamp, and source information.</li><li>Old value/new value tracking for sensitive edits.</li><li>Audit events for price changes, stock adjustments, voids, refunds, permissions, prescriptions, and master-data changes.</li><li>Searchable audit reports with restricted access.</li></ul>
+        </div>
+      </details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p0">P0 — CRITICAL</span><h2>Inventory Control</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">12. Inventory Management</div><div class="module-short">Central stock control for every product and location.</div></div></summary>
+      <div class="module-body"><p>Tracks stock quantities and statuses across the pharmacy. Inventory should be driven by transactions rather than manually overwriting a single stock number.</p><h4>Features</h4><ul><li>On-hand, available, reserved, damaged, expired, quarantine, and in-transit quantities.</li><li>Stock movement history for purchases, sales, returns, transfers, adjustments, damage, and expiration.</li><li>Location-aware inventory for branches, shelves, warehouses, and registers where required.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">13. Batch / Lot Tracking</div><div class="module-short">Track medicines at batch level for expiry, recall, receiving, and traceability.</div></div></summary>
+      <div class="module-body"><p>Every received batch can carry its own lot number, expiration date, cost, selling price, supplier, and quantity. This enables precise identification of stock affected by expiration or recall.</p><h4>Features</h4><ul><li>Batch number, product, manufacturing date, expiration date, quantity, purchase cost, selling price, supplier, and receiving date.</li><li>Batch history from receiving through sale, return, adjustment, or disposal.</li><li>Batch lookup and traceability reporting.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">14. Expiration Management</div><div class="module-short">Prevent expired products from being sold and identify upcoming expiry risks.</div></div></summary>
+      <div class="module-body"><p>Automatically identifies expired and soon-to-expire batches using configurable warning periods.</p><h4>Features</h4><ul><li>Expired, expiring today, ≤30 days, ≤60 days, ≤90 days, and good-stock classifications.</li><li>Dashboard alerts and expiry reports.</li><li>Configurable POS blocking rules for expired batches.</li><li>Quarantine/disposal workflow for expired inventory.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">15. FEFO Stock Allocation</div><div class="module-short">First Expired, First Out batch allocation for safer stock rotation.</div></div></summary>
+      <div class="module-body"><p>When multiple batches are available, the system preferentially allocates the batch with the earliest valid expiration date, subject to pharmacy policy and operational rules.</p><h4>Features</h4><ul><li>Automatic batch selection during sales and dispensing.</li><li>Manual override only with appropriate permission.</li><li>Batch allocation visibility in POS and transaction history.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">16. Stock Adjustment</div><div class="module-short">Controlled correction of physical inventory differences.</div></div></summary>
+      <div class="module-body"><p>Provides a formal process for changes caused by damage, loss, found stock, counting errors, internal use, or approved data correction.</p><h4>Features</h4><ul><li>Quantity, batch, reason, remarks, user, timestamp, and approval.</li><li>Positive and negative adjustments.</li><li>Adjustment history and variance reporting.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">17. Physical Stock Count</div><div class="module-short">Reconcile system quantities with actual physical inventory.</div></div></summary>
+      <div class="module-body"><p>Supports periodic physical inventory counts without directly manipulating stock balances.</p><h4>Features</h4><ul><li>Full stock count, category count, cycle count, random count, and barcode-based counting.</li><li>System quantity versus physical quantity and variance.</li><li>Investigation and approval before posting adjustments.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">18. Low Stock & Reorder Levels</div><div class="module-short">Identify products approaching stockout and prepare replenishment recommendations.</div></div></summary>
+      <div class="module-body"><p>Uses minimum stock, reorder point, maximum stock, and preferred order quantity to identify replenishment needs.</p><h4>Features</h4><ul><li>Per-product and per-branch reorder configuration.</li><li>Low-stock dashboard, alerts, and purchase suggestions.</li><li>Optional supplier preference and lead-time data.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p1">P1 — HIGH</span><h2>Purchasing & Supplier Management</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">19. Supplier Management</div><div class="module-short">Maintain supplier information, contacts, terms, and purchasing history.</div></div></summary>
+      <div class="module-body"><p>Stores supplier master data and connects suppliers with products, purchase orders, receiving, returns, and purchasing reports.</p><h4>Features</h4><ul><li>Company name, contact person, phone, email, address, tax information, payment terms, and status.</li><li>Supplier product catalog and purchase history.</li><li>Supplier performance information where useful.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">20. Purchase Orders</div><div class="module-short">Formalize purchasing from request through supplier order.</div></div></summary>
+      <div class="module-body"><p>Creates controlled purchase requests and purchase orders with approval and receiving status.</p><h4>Features</h4><ul><li>PO number, supplier, order date, expected delivery, products, quantities, costs, discounts, taxes, and total.</li><li>Status flow: Draft, Pending Approval, Approved, Ordered, Partially Received, Received, Cancelled.</li><li>Purchase history and printable/exportable PO documents.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">21. Purchase Receiving</div><div class="module-short">Receive actual quantities and batches instead of assuming the PO was fulfilled exactly.</div></div></summary>
+      <div class="module-body"><p>Captures what physically arrived from the supplier, including actual batch and expiry details. This is the point where inventory is added to stock.</p><h4>Features</h4><ul><li>Ordered versus received quantity comparison.</li><li>Batch number, expiry date, quantity, unit cost, selling price, damage, and accepted quantity.</li><li>Partial receiving and multiple receipts against one PO.</li><li>Automatic creation of inventory ledger entries.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">22. Supplier Returns</div><div class="module-short">Return damaged, incorrect, recalled, or near-expiry products to suppliers.</div></div></summary>
+      <div class="module-body"><p>Creates a traceable supplier return document linked to inventory batches and the original receiving transaction.</p><h4>Features</h4><ul><li>Product, batch, quantity, reason, supplier, date, and status.</li><li>Reasons such as damaged, near expiry, wrong product, wrong quantity, recall, and other configured reasons.</li><li>Automatic stock deduction and supplier-return reporting.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p1">P1 — HIGH</span><h2>Pharmacy-Specific Operations</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">23. Customer Management</div><div class="module-short">Maintain customer identity and transaction information with appropriate access controls.</div></div></summary>
+      <div class="module-body"><p>Provides customer records for receipts, purchase history, loyalty, discounts, and pharmacy workflows. Sensitive medical information should have stronger permissions than ordinary customer data.</p><h4>Features</h4><ul><li>Customer ID, name, contact, address, customer type, discount eligibility, and tax information.</li><li>Purchase history, returns, invoices, and configurable customer notes.</li><li>Privacy-aware access control and audit logging.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">24. Prescription Management</div><div class="module-short">Record and verify prescriptions before dispensing prescription-required medicines.</div></div></summary>
+      <div class="module-body"><p>Supports a controlled workflow where prescription-required products can be reviewed by an authorized pharmacist before completion.</p><h4>Features</h4><ul><li>Prescription number, prescriber, relevant license/reference information, patient, issue date, medicine, dosage, quantity, and refill information as applicable.</li><li>Prescription attachment or image where appropriate.</li><li>Verification status, pharmacist identity, dispensing record, and audit history.</li><li>Configurable rules for products requiring prescription verification.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">25. Pharmacist Verification & Dispensing</div><div class="module-short">Separate pharmacist review from ordinary cashier operations.</div></div></summary>
+      <div class="module-body"><p>Provides an approval step for transactions that require professional verification. The system should make it clear who verified and what was ultimately dispensed.</p><h4>Features</h4><ul><li>Pending verification queue.</li><li>Product, quantity, prescription, customer, and relevant transaction information.</li><li>Approve, reject, modify, or require clarification according to configured workflow.</li><li>Pharmacist identity and timestamp recorded in the transaction.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">26. Generic / Brand Relationships</div><div class="module-short">Connect equivalent product records for search and pharmacy workflows.</div></div></summary>
+      <div class="module-body"><p>Links products by generic composition, brand, strength, dosage form, or other configured product attributes so staff can locate appropriate available products.</p><h4>Features</h4><ul><li>Generic group, brand relationships, strength, dosage form, and manufacturer.</li><li>Search by generic or brand.</li><li>Configurable substitution/dispensing workflow subject to professional and legal requirements.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p2">P2 — MEDIUM</span><h2>Pricing, Promotions & Business Controls</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">27. Price Management</div><div class="module-short">Manage cost, retail, wholesale, member, and promotional pricing with history.</div></div></summary>
+      <div class="module-body"><p>Centralizes pricing rules and preserves historical price changes so the business can understand when and why prices changed.</p><h4>Features</h4><ul><li>Cost price, retail price, wholesale price, member price, and promotional price.</li><li>Effective dates and price history.</li><li>Approval workflow for sensitive price changes.</li><li>Margin and markup visibility.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">28. Discounts & Promotions</div><div class="module-short">Configure controlled discounts and promotional pricing.</div></summary>
+      <div class="module-body"><p>Supports common pharmacy retail promotions while preventing unauthorized discounting.</p><h4>Features</h4><ul><li>Buy-one-get-one, quantity discounts, member discounts, category discounts, bundles, and date-limited promotions.</li><li>Per-line or transaction-level discounts.</li><li>Authorization thresholds and discount audit logs.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">29. Inventory Valuation & Profitability</div><div class="module-short">Measure stock value, revenue, cost of goods sold, and gross profit.</div></div></summary>
+      <div class="module-body"><p>Transforms transaction and purchasing data into business-level profitability information.</p><h4>Features</h4><ul><li>Revenue, COGS, gross profit, gross margin, stock valuation, and product-level profitability.</li><li>Configurable costing methodology appropriate to the business's accounting practice.</li><li>Profitability by product, category, branch, cashier, and period.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">30. Customer Loyalty</div><div class="module-short">Optional membership, points, rewards, and customer incentives.</div></summary>
+      <div class="module-body"><p>Creates a configurable loyalty program without coupling it to the core inventory system.</p><h4>Features</h4><ul><li>Membership levels, points earning, redemption, rewards, and member-specific discounts.</li><li>Customer transaction history and loyalty activity.</li><li>Controls for excluded products or regulated transaction types where required.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p2">P2 — MEDIUM</span><h2>Reports & Dashboards</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">31. Sales Reports</div><div class="module-short">Analyze transaction volume, revenue, payment methods, cashiers, and adjustments.</div></summary>
+      <div class="module-body"><p>Provides operational and management reporting for daily sales and historical performance.</p><h4>Features</h4><ul><li>Daily, monthly, annual, hourly, product, category, cashier, branch, and payment-method reports.</li><li>Transaction, void, refund, discount, and cancellation reports.</li><li>Filtering, date ranges, grouping, print, and export.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">32. Inventory Reports</div><div class="module-short">Understand stock levels, movement, expiry, valuation, and discrepancies.</div></summary>
+      <div class="module-body"><p>Provides detailed visibility into inventory health and stock-control performance.</p><h4>Features</h4><ul><li>Current stock, stock movement, batch inventory, expiry, expired products, low stock, dead stock, fast/slow movers, adjustments, and valuation.</li><li>Batch-level traceability and stock reconciliation reports.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">33. Purchasing Reports</div><div class="module-short">Analyze purchasing costs, suppliers, purchase orders, receiving, and returns.</div></summary>
+      <div class="module-body"><p>Helps purchasing staff and management review supplier activity and procurement performance.</p><h4>Features</h4><ul><li>Purchase history, supplier purchases, PO status, receiving, supplier returns, purchase costs, and product procurement history.</li><li>Supplier comparisons and period-based purchasing analysis.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">34. Management Dashboard</div><div class="module-short">Single operational view of sales, inventory, purchasing, expiry, and exceptions.</div></summary>
+      <div class="module-body"><p>Displays actionable KPIs rather than only raw data.</p><h4>Features</h4><ul><li>Today's sales, transactions, gross profit, low-stock items, expiring batches, expired stock, pending POs, returns, voids, and cash variance.</li><li>Role-specific dashboard widgets.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p2">P2 — MEDIUM</span><h2>Multi-Branch & Warehouse</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">35. Branch Management</div><div class="module-short">Operate multiple pharmacy branches from one centralized system.</div></summary>
+      <div class="module-body"><p>Separates branch-level inventory, registers, users, and sales while maintaining a central product and management structure.</p><h4>Features</h4><ul><li>Branches, registers, branch users, branch-specific stock, and consolidated reporting.</li><li>Central product master and configurable branch pricing.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">36. Stock Transfer</div><div class="module-short">Move inventory between branches, warehouse, and other authorized locations.</div></summary>
+      <div class="module-body"><p>Creates a formal transfer lifecycle so inventory remains accountable while moving between locations.</p><h4>Features</h4><ul><li>Transfer request, approval, dispatch, in-transit, receiving, and completion.</li><li>Product and batch-level quantities.</li><li>Transfer discrepancies and audit history.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">37. Warehouse Management</div><div class="module-short">Manage centralized stock separately from retail branch inventory.</div></summary>
+      <div class="module-body"><p>Useful when purchasing is centralized and stock is distributed to several branches.</p><h4>Features</h4><ul><li>Warehouse locations, receiving, picking, transfers, stock counts, and batch tracking.</li><li>Branch replenishment and warehouse-level reorder management.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p3">P3 — LOW</span><h2>Operational Enhancements</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">38. Offline POS</div><div class="module-short">Continue limited POS operations during temporary connectivity failures.</div></summary>
+      <div class="module-body"><p>Allows a register to queue eligible transactions locally and synchronize when connectivity returns. This requires careful conflict, duplicate, security, and regulated-product handling.</p><h4>Features</h4><ul><li>Local transaction queue, synchronization, retry handling, duplicate protection, and conflict resolution.</li><li>Explicit restrictions for workflows that must remain online or require centralized verification.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">39. Barcode & Shelf Label Printing</div><div class="module-short">Generate internal labels, shelf labels, price tags, and barcode labels.</div></summary>
+      <div class="module-body"><p>Reduces manual labeling work and improves scanning accuracy in the pharmacy.</p><h4>Features</h4><ul><li>Product name, barcode, SKU, price, and configurable label fields.</li><li>Batch/expiry labels where appropriate.</li><li>Common label printer and paper-size support.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">40. Notifications & Alerts</div><div class="module-short">Deliver operational warnings to responsible staff.</div></summary>
+      <div class="module-body"><p>Centralizes alerts for exceptions that require action rather than relying solely on dashboards.</p><h4>Features</h4><ul><li>Low stock, expiry, expired stock, pending approvals, pending POs, supplier returns, cash variances, and other configurable events.</li><li>In-app notifications with optional email/SMS/messaging integration.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">41. Inventory Aging & Dead Stock</div><div class="module-short">Identify capital tied up in slow-moving or non-moving inventory.</div></summary>
+      <div class="module-body"><p>Analyzes stock by time since receipt or movement to support purchasing and stock-reduction decisions.</p><h4>Features</h4><ul><li>0–30, 31–60, 61–90, 91–180, and 180+ day aging bands.</li><li>Dead stock and slow-moving product reports.</li><li>Branch and category comparisons.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">42. ABC Inventory Analysis</div><div class="module-short">Prioritize inventory management using financial or movement-based classifications.</div></summary>
+      <div class="module-body"><p>Groups products into configurable A/B/C classes based on selected business metrics such as annual consumption value or sales contribution.</p><h4>Features</h4><ul><li>Configurable classification thresholds.</li><li>Reports for purchasing, cycle counting, and management review.</li></ul></div></details>
+    </section>
+
+    <section class="phase">
+      <div class="phase-head"><span class="priority p4">P4 — FUTURE</span><h2>Integrations, Automation & Advanced Intelligence</h2></div>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">43. Automatic Reorder Recommendations</div><div class="module-short">Recommend purchase quantities from stock levels, sales velocity, and supplier lead time.</div></summary>
+      <div class="module-body"><p>Calculates suggested replenishment rather than automatically placing orders. This keeps purchasing decisions under staff control.</p><h4>Features</h4><ul><li>Average daily sales, reorder point, safety stock, lead time, current stock, outstanding PO quantities, and recommended order quantity.</li><li>Supplier selection and purchase-order draft generation.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">44. Demand Forecasting</div><div class="module-short">Estimate future product demand using historical sales and operational factors.</div></summary>
+      <div class="module-body"><p>Uses historical transaction patterns to estimate future demand and possible stockout dates. Forecasts should be presented as recommendations with transparent assumptions.</p><h4>Features</h4><ul><li>Sales history, seasonality, trends, lead time, safety stock, forecast quantity, and projected stockout date.</li><li>Forecast accuracy monitoring.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">45. Payment Gateway Integration</div><div class="module-short">Connect electronic payments directly to transaction records.</div></summary>
+      <div class="module-body"><p>Integrates supported payment providers or terminals so payment references and transaction status can be captured automatically.</p><h4>Features</h4><ul><li>QR/e-wallet, card terminal, bank, and other supported payment methods.</li><li>Payment confirmation, reference IDs, reconciliation, retries, and failure handling.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">46. Accounting Integration</div><div class="module-short">Synchronize sales, purchases, payments, COGS, and other accounting data.</div></summary>
+      <div class="module-body"><p>Reduces duplicate data entry between POS/inventory and accounting systems.</p><h4>Features</h4><ul><li>Sales summaries, purchase data, payment settlements, inventory valuation, COGS, and configurable accounting mappings.</li><li>Export/API integration and synchronization logs.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">47. Online Pharmacy / E-Commerce</div><div class="module-short">Extend the product catalog and order workflow to online channels.</div></summary>
+      <div class="module-body"><p>Provides an online ordering layer connected to centralized product availability and pharmacy fulfillment workflows.</p><h4>Features</h4><ul><li>Online catalog, cart, customer accounts, orders, pickup/delivery, inventory reservation, and fulfillment.</li><li>Prescription upload and pharmacist verification for applicable products.</li><li>Order status synchronization with POS.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">48. AI Search & Reporting</div><div class="module-short">Natural-language access to product discovery and business reporting.</div></summary>
+      <div class="module-body"><p>Allows authorized users to ask questions such as which products are low in stock or which batches expire within a selected period. AI should operate over controlled system data and respect user permissions.</p><h4>Features</h4><ul><li>Natural-language product search.</li><li>Natural-language report queries.</li><li>Automated summaries and anomaly detection.</li><li>Permission-aware access and explicit source data behind generated answers.</li></ul></div></details>
+
+      <details class="module"><summary><input class="check" type="checkbox"><div><div class="module-title">49. Drug Information / Interaction Reference</div><div class="module-short">Optional clinical-reference integration for authorized pharmacy staff.</div></summary>
+      <div class="module-body"><p>Can connect to an appropriate drug-information source for reference information and interaction checking. This should be treated as decision support and not a replacement for professional pharmacist judgment.</p><h4>Features</h4><ul><li>Drug reference lookup, warnings, interaction information, and configurable reference links.</li><li>Source/version tracking where supported by the provider.</li></ul></div></details>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const boxes = () => [...document.querySelectorAll('.module .check')];
+  function updateStats(){
+    const all = boxes(), selected = all.filter(x => x.checked).length;
+    document.getElementById('stats').textContent = `${selected} selected / ${all.length} modules`;
+  }
+  function selectAll(value){ boxes().forEach(x => x.checked = value); updateStats(); }
+  let expanded = true;
+  function toggleDetails(){
+    expanded = !expanded;
+    document.querySelectorAll('.module').forEach(d => d.open = expanded);
+  }
+  document.addEventListener('change', e => {
+    if(e.target.matches('.check')) updateStats();
+  });
+  updateStats();
+</script>
+</body>
+</html>
